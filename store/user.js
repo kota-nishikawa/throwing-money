@@ -42,8 +42,11 @@ export const actions =  {
     },
     // 新規ユーザー登録を行います。
     regist: ({ commit, dispatch }, payload) => {
-        return UserAPI.regist(payload.mailAddress, payload.password,payload.username)
+        return UserAPI.regist(payload.mailAddress, payload.password)
             .then((res) =>{
+                res.user.updateProfile({
+                  displayName: payload.userName
+                })
                 commit('setIsLogin', true);
                 dispatch('setEntity', res.user);
             })
